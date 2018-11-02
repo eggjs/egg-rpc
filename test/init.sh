@@ -5,7 +5,7 @@ GEN=${PWD}/node_modules/.bin/egg-rpc-generator
 # test dir
 
 DIR=${PWD}/test/fixtures/apps
-NAMES="sofarpc hardload custom-registry"
+NAMES="sofarpc hardload custom-registry jar2proxy"
 
 for NAME in $NAMES
 do
