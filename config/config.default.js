@@ -7,12 +7,19 @@ const protocol = require('sofa-bolt-node');
 const { ZookeeperRegistry } = require('sofa-rpc-node').registry;
 
 module.exports = appInfo => {
+  let proto;
+  let classMap;
   const protoPath = path.join(appInfo.baseDir, 'run/proto.json');
+  const classMapPath = path.join(appInfo.baseDir, 'app/proxy_class/index.js');
   // 加载 proto
   if (fs.existsSync(protoPath)) {
-    const proto = antpb.fromJSON(require(protoPath));
-    protocol.setOptions({ proto });
+    proto = antpb.fromJSON(require(protoPath));
   }
+  // 加载 classMap
+  if (fs.existsSync(classMapPath)) {
+    classMap = require(classMapPath);
+  }
+  protocol.setOptions({ proto, classMap });
 
   return {
     rpc: {
