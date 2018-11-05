@@ -209,7 +209,42 @@ exports.echoObj = async function(req) {
 
 #### 4. 测试 RPC 接口
 
-在单元测试中，我们可以通过 `app.rpcRequest` 接口来方便的测试我们自己暴露的 RPC 服务，例如：
+调用服务的单元测试方式，使用 `app.mockProxy` API 来 mock 服务
+
+```js
+'use strict';
+
+const mm = require('egg-mock');
+const assert = require('assert');
+
+describe('test/mock.test.js', () => {
+  let app;
+  before(async function() {
+    app = mm.app({
+      baseDir: 'apps/mock',
+    });
+    await app.ready();
+  });
+  afterEach(mm.restore);
+  after(async function() {
+    await app.close();
+  });
+
+  it('should app.mockProxy ok', async function() {
+    app.mockProxy('DemoService', 'sayHello', async function(name) {
+      await sleep(1000);
+
+      return 'hello ' + name + ' from mock';
+    });
+
+    const ctx = app.createAnonymousContext();
+    const res = await ctx.proxy.demoService.sayHello('gxcsoccer');
+    assert(res === 'hello gxcsoccer from mock');
+  });
+});
+```
+
+在单元测试中，我们还可以通过 `app.rpcRequest` 接口来方便的测试我们自己暴露的 RPC 服务，例如：
 
 ```js
 'use strict';
