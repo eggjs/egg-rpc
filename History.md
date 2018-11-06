@@ -1,4 +1,10 @@
 
+1.2.0 / 2018-11-06
+==================
+
+**features**
+  * [[`065dd45`](http://github.com/eggjs/egg-rpc/commit/065dd45647f4825c9c7ec5d391215d8e7c94643c)] - feat: add mockProxy api (gxcsoccer <<gxcsoccer@126.com>>)
+
 1.1.0 / 2018-11-03
 ==================
 

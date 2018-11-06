@@ -1,6 +1,6 @@
 {
   "name": "egg-rpc-base",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "rpc base plugin for eggjs",
   "eggPlugin": {
     "name": "rpc"
