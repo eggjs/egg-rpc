@@ -24,6 +24,7 @@ describe('test/index.test.js', () => {
     await app.ready();
     await sleep(1000);
   });
+  afterEach(mm.restore);
   after(async function() {
     await app.close();
     await cleanDir();
@@ -53,5 +54,26 @@ describe('test/index.test.js', () => {
         code: 200,
         message: 'hello gxcsoccer, you are in B',
       }, done);
+  });
+
+  it('should app.mockProxy ok', async function() {
+    app.mockProxy('protoService', 'echoObj', async function() {
+      await sleep(100);
+      return {
+        code: 200,
+        message: 'hello gxcsoccer, this is by app.mockProxy',
+      };
+    });
+
+    const ctx = app.createAnonymousContext();
+    const res = await ctx.proxy.protoService.echoObj({
+      name: 'gxcsoccer',
+      group: 'B',
+    });
+    console.log(res);
+    assert.deepEqual(res, {
+      code: 200,
+      message: 'hello gxcsoccer, this is by app.mockProxy',
+    });
   });
 });

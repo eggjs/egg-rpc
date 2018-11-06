@@ -10,14 +10,28 @@ module.exports = appInfo => {
   let proto;
   let classMap;
   const protoPath = path.join(appInfo.baseDir, 'run/proto.json');
-  const classMapPath = path.join(appInfo.baseDir, 'app/proxy_class/index.js');
+  const proxyClassDir = path.join(appInfo.baseDir, 'app/proxy_class');
   // 加载 proto
   if (fs.existsSync(protoPath)) {
     proto = antpb.fromJSON(require(protoPath));
   }
   // 加载 classMap
-  if (fs.existsSync(classMapPath)) {
-    classMap = require(classMapPath);
+  if (fs.existsSync(proxyClassDir)) {
+    classMap = new Proxy({}, {
+      get(target, className) {
+        let map = target[className];
+        if (!map) {
+          const args = className.split('.');
+          args.unshift(proxyClassDir);
+          args[args.length - 1] = args[args.length - 1] + '.js';
+          const classfile = path.join.apply(null, args);
+          if (fs.existsSync(classfile)) {
+            map = target[className] = require(classfile)[className];
+          }
+        }
+        return map;
+      },
+    });
   }
   protocol.setOptions({ proto, classMap });
 

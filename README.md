@@ -210,6 +210,43 @@ exports.echoObj = async function(req) {
 
 #### 4. RPC Unittest in Eggjs
 
+RPC Client Unittest (mock)
+
+```js
+'use strict';
+
+const mm = require('egg-mock');
+const assert = require('assert');
+
+describe('test/mock.test.js', () => {
+  let app;
+  before(async function() {
+    app = mm.app({
+      baseDir: 'apps/mock',
+    });
+    await app.ready();
+  });
+  afterEach(mm.restore);
+  after(async function() {
+    await app.close();
+  });
+
+  it('should app.mockProxy ok', async function() {
+    app.mockProxy('DemoService', 'sayHello', async function(name) {
+      await sleep(1000);
+
+      return 'hello ' + name + ' from mock';
+    });
+
+    const ctx = app.createAnonymousContext();
+    const res = await ctx.proxy.demoService.sayHello('gxcsoccer');
+    assert(res === 'hello gxcsoccer from mock');
+  });
+});
+```
+
+RPC Server Unittest
+
 ```js
 'use strict';
 
