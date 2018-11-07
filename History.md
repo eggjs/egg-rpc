@@ -1,4 +1,10 @@
 
+1.3.0 / 2018-11-07
+==================
+
+**features**
+  * [[`fe76cd5`](http://github.com/eggjs/egg-rpc/commit/fe76cd58ad08a8defd3ac1c8082b84391c5e6f40)] - feat: registry class support app (leoner <<kangpangpang@gmail.com>>)
+
 1.2.0 / 2018-11-06
 ==================
 
