@@ -11,6 +11,7 @@ module.exports = {
       this[_rpcRegistry] = new registryClass(Object.assign({
         logger: this.coreLogger,
         cluster: this.cluster,
+        app: this,
       }, options));
       this[_rpcRegistry].on('error', err => { this.coreLogger.error(err); });
       this.beforeClose(async () => {
