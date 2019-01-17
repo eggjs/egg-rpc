@@ -9,8 +9,10 @@ const { ZookeeperRegistry } = require('sofa-rpc-node').registry;
 module.exports = appInfo => {
   let proto;
   let classMap;
+  let apiMeta;
   const protoPath = path.join(appInfo.baseDir, 'run/proto.json');
   const proxyClassDir = path.join(appInfo.baseDir, 'app/proxy_class');
+  const apiMetaPath = path.join(appInfo.baseDir, 'config/apiMeta.json');
   // 加载 proto
   if (fs.existsSync(protoPath)) {
     proto = antpb.fromJSON(require(protoPath));
@@ -35,6 +37,9 @@ module.exports = appInfo => {
   }
   protocol.setOptions({ proto, classMap });
 
+  if (fs.existsSync(apiMetaPath)) {
+    apiMeta = require(apiMetaPath);
+  }
   return {
     rpc: {
       registryClass: ZookeeperRegistry,
@@ -44,6 +49,7 @@ module.exports = appInfo => {
         responseTimeout: 3000,
       },
       server: {
+        apiMeta,
         protocol,
         port: 12200,
         idleTime: 5000,

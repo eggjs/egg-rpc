@@ -16,6 +16,16 @@ describe('test/jar2proxy.test.js', () => {
     await app.close();
   });
 
+  it('should has apiMeta', () => {
+    assert(app.rpcServer);
+    assert(app.rpcServer.apiMeta);
+    assert(app.rpcServer.classMap);
+    assert.deepEqual(app.rpcServer.apiMeta, require('./fixtures/apps/jar2proxy/config/apiMeta.json'));
+    assert(app.rpcServer.services && app.rpcServer.services.has('eggjs.demo.DemoService:1.0.0'));
+    const service = app.rpcServer.services.get('eggjs.demo.DemoService:1.0.0');
+    assert.deepEqual(service.apiMeta, app.rpcServer.apiMeta['eggjs.demo.DemoService']);
+  });
+
   it('should invoke sayHello', done => {
     app.rpcRequest('eggjs.demo.DemoService')
       .invoke('sayHello')

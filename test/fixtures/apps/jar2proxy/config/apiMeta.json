@@ -1,0 +1,40 @@
+{
+  "eggjs.demo.DemoService": {
+    "appName": "jar2proxy",
+    "canonicalName": "eggjs.demo.DemoService",
+    "codeSource": "jar2proxy-facade-1.0.0.jar",
+    "methods": [{
+        "name": "sayHello",
+        "parameterTypes": [
+          "java.lang.String"
+        ],
+        "returnType": "java.lang.String"
+      },
+      {
+        "name": "echoPerson",
+        "parameterTypes": [
+          "eggjs.demo.Person"
+        ],
+        "returnType": "eggjs.demo.Person"
+      }
+    ],
+    "classMaps": {
+      "eggjs.demo.Person": {
+        "id": {
+          "type": "int",
+          "defaultValue": 0
+        },
+        "name": {
+          "type": "java.lang.String"
+        },
+        "address": {
+          "type": "java.lang.String"
+        },
+        "salary": {
+          "type": "int",
+          "defaultValue": 0
+        }
+      }
+    }
+  }
+}
