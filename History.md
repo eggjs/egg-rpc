@@ -1,4 +1,10 @@
 
+1.3.1 / 2019-01-17
+==================
+
+**fixes**
+  * [[`3d8b65e`](http://github.com/eggjs/egg-rpc/commit/3d8b65e4856bfd7049bf4262649e9c2e95f8ca16)] - fix: add apiMeta to rpc server (gxcsoccer <<gxcsoccer@126.com>>)
+
 1.3.0 / 2018-11-07
 ==================
 
